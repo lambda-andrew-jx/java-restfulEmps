@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WebemployeesApplication
 {
 
-    static EmpList ourEmpList;
+    public static EmpList ourEmpList;
     public static void main(String[] args)
     {
         ourEmpList = new EmpList();

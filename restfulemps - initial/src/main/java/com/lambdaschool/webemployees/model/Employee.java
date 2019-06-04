@@ -1,4 +1,4 @@
-package com.lambdaschool.webemployees;
+package com.lambdaschool.webemployees.model;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -33,6 +33,10 @@ public class Employee
         this.has401k = toClone.isHas401k();
         this.companyID = toClone.getCompanyID();
         this.healthPlanID = toClone.getHealthPlanID();
+    }
+
+    public Employee()
+    {
     }
 
     public long getId()
