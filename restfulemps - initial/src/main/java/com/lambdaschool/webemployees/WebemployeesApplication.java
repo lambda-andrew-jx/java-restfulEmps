@@ -2,7 +2,11 @@ package com.lambdaschool.webemployees;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+@EnableWebMvc
 @SpringBootApplication
 public class WebemployeesApplication
 {
@@ -11,7 +15,10 @@ public class WebemployeesApplication
     public static void main(String[] args)
     {
         ourEmpList = new EmpList();
-        SpringApplication.run(WebemployeesApplication.class, args);
+        ApplicationContext ctx = SpringApplication.run(WebemployeesApplication.class, args);
+
+        DispatcherServlet dispatcherServlet = (DispatcherServlet)ctx.getBean("dispatcherServlet");
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
     }
 
 }

@@ -47,8 +47,13 @@ public class EmployeeController
 			@PathVariable
 					char letter)
 	{
+
 		ArrayList<Employee> rtnEmps = WebemployeesApplication.ourEmpList.
 				findEmployees(e -> e.getFname().toUpperCase().charAt(0) == Character.toUpperCase(letter));
+		if(rtnEmps.size() == 0)
+		{
+			throw new ResourceNotFoundException("No Employees fname start with " + letter);
+		}
 		return new ResponseEntity<>(rtnEmps, HttpStatus.OK);
 	}
 }
