@@ -1,5 +1,7 @@
 package com.lambdaschool.webemployees;
 
+import com.lambdaschool.webemployees.model.Employee;
+
 import java.util.ArrayList;
 
 public class EmpList

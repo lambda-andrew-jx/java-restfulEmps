@@ -1,8 +1,12 @@
-package com.lambdaschool.webemployees;
+package com.lambdaschool.webemployees.controller;
 
+import com.lambdaschool.webemployees.exception.ResourceNotFoundException;
+import com.lambdaschool.webemployees.model.Employee;
+import com.lambdaschool.webemployees.WebemployeesApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 
@@ -25,7 +29,12 @@ public class EmployeeController
             @PathVariable
                     long id)
     {
-        Employee rtnEmp = WebemployeesApplication.ourEmpList.findEmployee(e -> (e.getId() == id));
+        Employee rtnEmp;
+        if (WebemployeesApplication.ourEmpList.findEmployee(e -> (e.getId() == id)) == null) {
+            throw new ResourceNotFoundException("Employee with id " + id + " not found.");
+        } else {
+            rtnEmp = WebemployeesApplication.ourEmpList.findEmployee(e -> (e.getId() == id));
+        }
         return new ResponseEntity<>(rtnEmp, HttpStatus.OK);
     }
 
@@ -37,6 +46,21 @@ public class EmployeeController
     {
         ArrayList<Employee> rtnEmps = WebemployeesApplication.ourEmpList.
                 findEmployees(e -> e.getFname().toUpperCase().charAt(0) == Character.toUpperCase(letter));
+
+        if (rtnEmps.size() == 0) {
+            throw new ResourceNotFoundException("No employees first name start with " + letter);
+        }
         return new ResponseEntity<>(rtnEmps, HttpStatus.OK);
+    }
+
+    // localhost:2019/data/employeetable
+    @GetMapping(value = "/employeetable")
+    public ModelAndView displayEmployeeTable()
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("employees");
+        mav.addObject("employeeList", WebemployeesApplication.ourEmpList.empList);
+
+        return mav;
     }
 }
